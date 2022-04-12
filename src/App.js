@@ -6,12 +6,15 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+// import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
     display: 'flex',
+    margin: '10px auto',
     alignItems: 'center',
     width: 400,
   },
@@ -22,17 +25,10 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     padding: 10,
   },
-  divider: {
-    height: 28,
-    margin: 4,
-  },
 }));
 
-
 function App() {
-
   
-
   const classes = useStyles();
 
   const APP_ID = "1dd92301";
@@ -41,7 +37,7 @@ function App() {
 
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('apple');
+  const [query, setQuery] = useState('mango');
 
 
   useEffect(() => {
@@ -54,6 +50,7 @@ function App() {
       `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
     );
     setRecipes(response.data.hits);
+    console.log(response.data.hits);
   }
 
 
@@ -82,16 +79,27 @@ function App() {
           <SearchIcon />
         </IconButton>
     </Paper>
+    <div style={{ width: '100%' }}>
+    <Box 
+      display="flex" 
+      flexWrap="wrap"
+      justifyContent="space-evenly"
+      p={1}
+      m={1}
+    >
       {recipes.map((recipe) => (
-        <Recipe 
-          // key={}
-          title={recipe.recipe.label}
-          calories={recipe.recipe.calories}
-          image={recipe.recipe.image}
-          ingredients={recipe.recipe.ingredients}
-        />
+        <Box p={1} >
+            <Recipe 
+              key={recipe.recipe.label}
+              title={recipe.recipe.label}
+              calories={recipe.recipe.calories}
+              image={recipe.recipe.image}
+              ingredients={recipe.recipe.ingredients}
+            />
+        </Box>
       ))}
-      
+      </Box >
+      </div>
     </div>
   );
 }
